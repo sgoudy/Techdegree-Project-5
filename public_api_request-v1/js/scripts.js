@@ -17,17 +17,25 @@ modal.setAttribute('class', 'modal');
 modalCont.appendChild(modal);
 
 //	Create Exit Button and append to modal div	
-const exitBtn = document.createElement('button');
+const exitBtn = document.createElement('btn');
+exitBtn.innerHTML = `
+<button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>`;
 modal.appendChild(exitBtn);
-exitBtn.setAttribute('type', 'button');
-exitBtn.setAttribute('id', 'modal-close-btn');
-exitBtn.setAttribute('class', 'modal-close-btn');
-exitBtn.innerHTML = '<strong>X</strong>';
 
 //	Create modal info container and append to modal div
 const infoCont = document.createElement('div');
 infoCont.setAttribute('class', 'modal-info-container');
 modal.appendChild(infoCont);
+
+//
+const scrollBtnCont = document.createElement('div');
+scrollBtnCont.setAttribute('class', 'modal-btn-container');
+modalCont.appendChild(scrollBtnCont);
+scrollBtnCont.innerHTML = `
+	<button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+    <button type="button" id="modal-next" class="modal-next btn">Next</button>`;
+scrollBtnCont.setAttribute('hidden', true);
+
 
 // ------------------------------------------
 //  FETCH FUNCTIONS
@@ -79,9 +87,9 @@ function createProfile (results){
 	}
 	
 /**
- * [selectGallery description]
- * @param  {[type]} e [description]
- * @return {[type]}   [description]
+ * selectGallery function
+ * @param  (e) click event
+ * @return email of item clicked
  */
 function selectGallery(e){
 	const cardData = e.target;
@@ -117,10 +125,10 @@ function selectGallery(e){
  * @param  {name} user object
  * @return container information
  */
-
 function createModal (name){
 //	Display container when element is clicked	
 	modalCont.hidden = false;
+	scrollBtnCont.hidden = false;
 //	Choose info to display in container upon click
 		info.forEach(each => {
 			if (each.email === name){
@@ -136,12 +144,27 @@ function createModal (name){
 			}
 		})	
 	}	
-		
+
+/**
+ * closeBox function
+ *  sets modalCont attribute to hidden on click
+ */		
 function closeBox(){
 	modalCont.hidden = true;
 }		
+
+function scrollFunc(e){
+	if(e.target.className === 'modal-next btn'){
+		console.log('next')
+	} else if (e.target.className === 'modal-prev btn'){
+		console.log('prev')
+	} else {
+		return null;
+	}
+}
 // ------------------------------------------
 //  EVENT LISTENERS
 // ------------------------------------------
 galleryImg.addEventListener('click', selectGallery)
 exitBtn.addEventListener('click', closeBox)
+scrollBtnCont.addEventListener('click', scrollFunc)
