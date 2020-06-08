@@ -11,6 +11,24 @@ const scriptPar = script.parentNode;
 scriptPar.insertBefore(modalCont, script);
 modalCont.setAttribute('hidden', true);
 
+//	Create modal div and append to modal container	
+const modal = document.createElement('div');
+modal.setAttribute('class', 'modal');
+modalCont.appendChild(modal);
+
+//	Create Exit Button and append to modal div	
+const exitBtn = document.createElement('button');
+modal.appendChild(exitBtn);
+exitBtn.setAttribute('type', 'button');
+exitBtn.setAttribute('id', 'modal-close-btn');
+exitBtn.setAttribute('class', 'modal-close-btn');
+exitBtn.innerHTML = '<strong>X</strong>';
+
+//	Create modal info container and append to modal div
+const infoCont = document.createElement('div');
+infoCont.setAttribute('class', 'modal-info-container');
+modal.appendChild(infoCont);
+
 // ------------------------------------------
 //  FETCH FUNCTIONS
 // ------------------------------------------
@@ -60,7 +78,6 @@ function createProfile (results){
 		})
 	}
 	
-//---------- Return email if card is clicked in any location -------------------//
 /**
  * [selectGallery description]
  * @param  {[type]} e [description]
@@ -104,21 +121,6 @@ function selectGallery(e){
 function createModal (name){
 //	Display container when element is clicked	
 	modalCont.hidden = false;
-//	Create modal div and append to modal container	
-	const modal = document.createElement('div');
-	modal.setAttribute('class', 'modal');
-	modalCont.appendChild(modal);
-//	Create Exit Button and append to modal div	
-	const exitBtn = document.createElement('button');
-	modal.appendChild(exitBtn);
-	exitBtn.setAttribute('type', 'button');
-	exitBtn.setAttribute('id', 'modal-close-btn');
-	exitBtn.setAttribute('class', 'modal-close-btn');
-	exitBtn.innerHTML = '<strong>X</strong>';
-//	Create modal info container and append to modal div
-	const infoCont = document.createElement('div');
-	infoCont.setAttribute('class', 'modal-info-container');
-	modal.appendChild(infoCont);
 //	Choose info to display in container upon click
 		info.forEach(each => {
 			if (each.email === name){
@@ -135,12 +137,11 @@ function createModal (name){
 		})	
 	}	
 		
-		
-
-		
-
-
+function closeBox(){
+	modalCont.hidden = true;
+}		
 // ------------------------------------------
 //  EVENT LISTENERS
 // ------------------------------------------
-galleryImg.addEventListener('click', selectGallery, false)
+galleryImg.addEventListener('click', selectGallery)
+exitBtn.addEventListener('click', closeBox)
