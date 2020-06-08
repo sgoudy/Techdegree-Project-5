@@ -52,25 +52,45 @@ scrollBtnCont.innerHTML = `
     <button type="button" id="modal-next" class="modal-next btn">Next</button>`;
 scrollBtnCont.setAttribute('hidden', true);
 
+//  Store information on 12 users printed to screen here
+let info=[];
 // ------------------------------------------
 //  FETCH FUNCTIONS
 // ------------------------------------------
 fetch(allUsers)
+  .then(checkStatus)
   .then(response => response.json())
   .then(data => createProfile(data.results))
+  .catch(error => console.log('There was a problem with your request!', error))
   
 // ------------------------------------------
 //  HELPER FUNCTIONS
 // ------------------------------------------
-let info=[];
 
+/**
+ * Function checks on fetch results
+ * @param  (response)
+ * @return result of fetch request
+ */
+function checkStatus(response){
+	if (response.ok){
+		return Promise.resolve(response);
+	} else {
+		return Promise.reject(new Error(response.statusText))
+	}
+}
+
+/**
+ * Function creates template for each employee card
+ * @param  (results) employee information 
+ * @return card display
+ */
 function createProfile (results){
 	results.forEach(each => {
 	//  Create the placeholders for each profile
 		const card = document.createElement('div');
 		card.setAttribute('class', 'card');
 		card.style.borderRadius = '15px';
-		card.style.backgroundColor
 		galleryImg.appendChild(card);
 	//  Image holder
 		const cardImgCont = document.createElement('div');
@@ -104,7 +124,8 @@ function createProfile (results){
 	}
 	
 /**
- * selectGallery function
+ * Function identifies unique email address of person
+ * no matter where on the card a user clicks.
  * @param  (e) click event
  * @return email of item clicked
  */
@@ -138,7 +159,7 @@ function selectGallery(e){
 }
 
 /**
- * createModal function
+ * Function creates Modals for users on click
  * @param  {name} user object
  * @return container information
  */
@@ -163,16 +184,16 @@ function createModal (name){
 }	
 
 /**
- * closeBox function
- *  sets modalCont attribute to hidden on click
+ *  Function sets modalCont attribute to hidden on click
  */		
 function closeBox(){
 	modalCont.hidden = true;
 }	
 
 /**
- *
- * 
+ * Function allows for Next and Prev Btn Functionality
+ * @param  {e} 
+ * @return createModal 
  */
 function scrollFunc(e){
 	const parent = e.target.parentNode.parentNode.children[0];
@@ -198,8 +219,11 @@ function scrollFunc(e){
 			}
 	})
 }
-/*
- *
+
+/**
+ * Function performs Search of Items on Page
+ * @param  {e} 
+ * @return createModal 
  */
 function formSearch (e){
 	e.preventDefault();
