@@ -60,29 +60,29 @@ function createProfile (results){
 		})
 	}
 	
-
+//---------- Return email if card is clicked in any location -------------------//
 function selectGallery(e){
 	const cardData = e.target;
-		if (cardData.tagName === 'H3'){
-			const name = cardData.textContent;
-			createModal(name);
-		} else if (cardData.tagName === 'P'){
-			const p = cardData.parentNode.children[0].textContent;
-			createModal(p);
+		if (cardData.tagName === 'P'){
+			const emailAndCity = cardData.parentNode.children[1].textContent;
+			createModal (emailAndCity);
+		} else if (cardData.tagName === 'H3'){
+			const name = cardData.parentNode.children[1].textContent;
+			createModal (name);
 		} else if (cardData.tagName === 'DIV' && cardData.className === 'card'){
 			const div = cardData.children[1];
-			const divName = div.querySelector('#name').textContent;
+			const divName = div.querySelector('.card-text').textContent;
 			createModal(divName);
-		} else if (cardData.tagName === 'DIV' && cardData.className === 'card-info-container'){
-			const cardName = cardData.children[0].textContent;
+		 } else if (cardData.tagName === 'DIV' && cardData.className === 'card-info-container'){
+			const cardName = cardData.children[1].textContent;
 			createModal(cardName);
-		} else if (cardData.tagName === 'DIV' && cardData.className === 'card-img-container'){
+		 } else if (cardData.tagName === 'DIV' && cardData.className === 'card-img-container'){
 			const imgParent = cardData.parentNode.children[1];
-			const imgParentText = imgParent.querySelector('#name').textContent;
+			const imgParentText = imgParent.querySelector('.card-text').textContent;
 			createModal(imgParentText)
-		} else if (cardData.tagName === 'IMG'){
+		 } else if (cardData.tagName === 'IMG'){
 			const img = cardData.parentNode.parentNode.children[1];
-			const imgName = img.querySelector('#name').textContent;
+			const imgName = img.querySelector('.card-text').textContent;
 			createModal(imgName)
 		}
 		else {	
@@ -92,11 +92,9 @@ function selectGallery(e){
 
 
 function createModal (name){
-	const fName = name.split(' ')[0];
-	const lName = name.split(' ')[1];
-	console.log(info)
-	console.log(lName)
-	console.log(fName)
+	
+	console.log(name)
+	
 }
 
 	// } else {
