@@ -8,7 +8,7 @@ const search = document.querySelector('.search-container');
 const form = document.createElement('form');
 form.innerHTML = `
 	<form action="#" method="get">
-    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+    <input type="search" id="search-input" class="search-input" placeholder="First or Last Name">
     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
 	</form>`
 search.appendChild(form)
@@ -30,13 +30,10 @@ modalCont.setAttribute('hidden', true);
 //	Create modal div and append to modal container	
 const modal = document.createElement('div');
 modal.setAttribute('class', 'modal');
-modalCont.appendChild(modal);
-
-//	Create Exit Button and append to modal div	
-const exitBtn = document.createElement('btn');
-exitBtn.innerHTML = `
+modal.innerHTML = `
 <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>`;
-modal.appendChild(exitBtn);
+modalCont.appendChild(modal);
+const exitBtn = document.querySelector('.modal-close-btn');
 
 //	Create modal info container and append to modal div
 const infoCont = document.createElement('div');
@@ -216,34 +213,35 @@ function scrollFunc(e){
 				prevPersonIndexValue = 11;
 				const startAtTop = info[prevPersonIndexValue].email;
 				return createModal(startAtTop);
-			}
+			} 
 	})
 }
 
 /**
  * Function performs Search of Items on Page
- * @param  {e} 
- * @return createModal 
+ * @param  {e} input value
  */
 function formSearch (e){
 	e.preventDefault();
-	const input = document.getElementById('search-input').value;
-	const lowerCaseInput = input.toLowerCase();
-	info.forEach(each => {
-		const first = each.fName;
-		const last = each.lName;
-		const whole = first.concat(' ',last);
-		if (lowerCaseInput === each.fName.toLowerCase()){
-			const searchEmail = each.email;
-			return createModal(searchEmail);
-		} else if (lowerCaseInput === each.lName.toLowerCase()){
-			const searchEmail = each.email;
-			return createModal(searchEmail);
-		} else if (lowerCaseInput === whole.toLowerCase()){	
-			const searchEmail = each.email;
-			return createModal(searchEmail);	
+	const caseSensInput = document.getElementById('search-input').value;
+	const input = caseSensInput.toLowerCase();
+	const card = document.querySelectorAll('.card');
+	let fName = [];
+	let lName = [];
+	for (let i = 0; i < info.length; i ++){
+		const first = info[i].fName.toLowerCase();
+		const last = info[i].lName.toLowerCase();
+		fName.push(first);
+		lName.push(last);
 		}
-	})
+	for (let i = 0; i < fName.length; i ++){
+		if (fName[i].includes(input) || lName[i].includes(input)){
+			const index = i;
+			card[i].style.display = ''
+		} else {
+			card[i].style.display = 'none';
+		}
+	}
 }
 
 // ------------------------------------------
