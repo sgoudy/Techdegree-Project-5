@@ -9,9 +9,11 @@ const form = document.createElement('form');
 form.innerHTML = `
 	<form action="#" method="get">
     <input type="search" id="search-input" class="search-input" placeholder="First or Last Name">
-    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit"> 
+    <p class="text">To Display ALL: Clear Search and Hit Enter </p>
 	</form>`
 search.appendChild(form)
+const text = document.querySelector('.text').style.color = 'white'
 
 //  CSS Tweaks
 body.style.backgroundColor = '#292929'
