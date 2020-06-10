@@ -15,11 +15,6 @@ form.innerHTML = `
 search.appendChild(form)
 const text = document.querySelector('.text').style.color = 'white'
 
-//  CSS Tweaks
-body.style.backgroundColor = '#292929'
-const h1 = document.querySelector('h1');
-h1.style.color = 'white';
-
 //  Create modal div		
 const modalCont = document.createElement('div');
 modalCont.setAttribute('class', 'modal-container');
